@@ -1,11 +1,9 @@
-import './App.css';
+import React from "react";
+import "./App.css";
+import SortingVisualizer from "./Components/SortingVisualizer";
 
 function App() {
-  return (
-    <div className="App">
-      Hello
-    </div>
-  );
+  return <SortingVisualizer></SortingVisualizer>;
 }
 
 export default App;
