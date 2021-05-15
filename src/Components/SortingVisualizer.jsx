@@ -5,11 +5,12 @@ import styled from "styled-components";
 
 function SortingVisualizer() {
   const [array, setArray] = useState([]);
+  const [arraySize, setArraySize] = useState(100);
 
   const randomNumber = (min, max) =>
     Math.floor(Math.random() * (max - min) + min);
 
-  let arraySize = 50;
+  const setSize = (value) => setArraySize(value);
 
   const resetArray = () => {
     const array = [];
@@ -21,7 +22,7 @@ function SortingVisualizer() {
 
   useEffect(() => {
     resetArray();
-  }, []);
+  }, [arraySize]);
 
   const bubbleSort = () => {
     let arr = array;
@@ -31,7 +32,11 @@ function SortingVisualizer() {
 
   return (
     <>
-      <NavBar resetArray={resetArray} bubbleSort={bubbleSort}></NavBar>
+      <NavBar
+        resetArray={resetArray}
+        setSize={setSize}
+        bubbleSort={bubbleSort}
+      />
       <FlexBars>
         {array.map((value, idx) => (
           <Bars height={value} arraySize={arraySize} key={idx}></Bars>
