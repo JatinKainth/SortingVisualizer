@@ -2,7 +2,7 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import RangeSlider from "./Slider";
 
-function NavBar({ resetArray, setSize, bubbleSort }) {
+function NavBar({ resetArray, setSize, sort, test }) {
   const theme = {
     navBackground: "#2b2b2b",
   };
@@ -13,8 +13,8 @@ function NavBar({ resetArray, setSize, bubbleSort }) {
         <Button onClick={() => resetArray()}>Generate New Array</Button>
         <RangeSlider setSize={setSize} />
         <Button onClick={() => resetArray()}>Merge Sort</Button>
-        <Button onClick={() => bubbleSort()}>Bubble Sort</Button>
-        <Button onClick={() => resetArray()}>Insertion Sort</Button>
+        <Button onClick={() => sort()}>Bubble Sort</Button>
+        <Button onClick={() => test()}>Insertion Sort</Button>
         <Button onClick={() => resetArray()}>Select Sort</Button>
         <Button onClick={() => resetArray()}>Sort</Button>
       </NavBarStyled>
