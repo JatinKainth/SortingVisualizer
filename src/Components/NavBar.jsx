@@ -1,22 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import RangeSlider from "./Slider";
 
-function NavBar({ resetArray, setSize, sort, test }) {
-  const theme = {
-    navBackground: "#2b2b2b",
-  };
+const theme = {
+  navBackground: "#2b2b2b",
+};
+
+function NavBar({ resetArray, setSize, sort, buttonState }) {
+  const [sortingAlgo, setSortingAlgo] = useState("");
 
   return (
     <ThemeProvider theme={theme}>
       <NavBarStyled>
-        <Button onClick={() => resetArray()}>Generate New Array</Button>
-        <RangeSlider setSize={setSize} />
-        <Button onClick={() => resetArray()}>Merge Sort</Button>
-        <Button onClick={() => sort()}>Bubble Sort</Button>
-        <Button onClick={() => test()}>Insertion Sort</Button>
-        <Button onClick={() => resetArray()}>Select Sort</Button>
-        <Button onClick={() => resetArray()}>Sort</Button>
+        <Button onClick={() => resetArray()} disabled={buttonState}>
+          Generate New Array
+        </Button>
+        <RangeSlider setSize={setSize} sliderState={buttonState} />
+        <Button
+          onClick={() => setSortingAlgo("mergeSort")}
+          disabled={buttonState}
+        >
+          Merge Sort
+        </Button>
+        <Button
+          onClick={() => setSortingAlgo("bubbleSort")}
+          disabled={buttonState}
+        >
+          Bubble Sort
+        </Button>
+        <Button
+          onClick={() => setSortingAlgo("insertionSort")}
+          disabled={buttonState}
+        >
+          Insertion Sort
+        </Button>
+        <Button
+          onClick={() => setSortingAlgo("selectionSort")}
+          disabled={buttonState}
+        >
+          Select Sort
+        </Button>
+        <Button
+          onClick={() => sort(sortingAlgo)}
+          disabled={sortingAlgo === "" ? true : false || buttonState}
+        >
+          Sort
+        </Button>
       </NavBarStyled>
     </ThemeProvider>
   );
@@ -42,5 +71,10 @@ const Button = styled.button`
 
   &:hover {
     text-decoration: underline;
+  }
+
+  &:disabled {
+    color: red;
+    cursor: initial;
   }
 `;

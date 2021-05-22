@@ -2,7 +2,7 @@ import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 
-export default function RangeSlider({ setSize }) {
+export default function RangeSlider({ setSize, sliderState }) {
   const updateSize = (value) => {
     setSize(value);
   };
@@ -18,6 +18,7 @@ export default function RangeSlider({ setSize }) {
         step={10}
         min={10}
         max={200}
+        disabled={sliderState}
       />
     </SliderStyles>
   );

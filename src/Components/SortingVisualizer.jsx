@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Bars from "./Bars";
 import NavBar from "./NavBar";
 import styled from "styled-components";
+import bubbleSort from "./SortingAlgorithms/BubbleSort";
+import mergeSort from "./SortingAlgorithms/MergeSort";
+import insertionSort from "./SortingAlgorithms/InsertionSort";
+import selectionSort from "./SortingAlgorithms/SelectionSort";
 
 function SortingVisualizer() {
   const [array, setArray] = useState([]);
   const [color, setColor] = useState([]);
   const [arraySize, setArraySize] = useState(100);
+  const [buttonState, setButtonState] = useState(false);
+  // const [sortingState, setSortingState] = useState(false);
+  // const isInitiialMount = useRef(true);
 
   const resetArray = () => {
     const array = [];
@@ -21,30 +28,18 @@ function SortingVisualizer() {
     setColor(color);
   };
 
+  // const sortArray = () => {
+  //   let arr = [...array];
+  //   arr.sort();
+  //   setArray(arr);
+  // };
+
   useEffect(() => {
     resetArray();
   }, [arraySize]);
 
-  const bubbleSort = () => {
-    let arr = [...array];
-    let animation = [];
-
-    for (let i = 0; i < arraySize - 1; i++) {
-      for (let j = 0; j < arraySize - i - 1; j++) {
-        animation.push("changeColor", j, j + 1, "orange");
-        if (arr[j] > arr[j + 1]) {
-          animation.push("swap", j, j + 1);
-          const temp = arr[j];
-          arr[j] = arr[j + 1];
-          arr[j + 1] = temp;
-        }
-        animation.push("changeColor", j, j + 1, "black");
-      }
-    }
-    return animation;
-  };
-
-  const sort = () => {
+  const sort = (sortingAlgo) => {
+    setButtonState(true);
     const changeColor = (a, b, col) => {
       let barOne = document.getElementById(`${a}`);
       let barTwo = document.getElementById(`${b}`);
@@ -62,10 +57,26 @@ function SortingVisualizer() {
       barTwo.style.height = temp;
     };
 
-    const animations = bubbleSort();
+    let animations, arr;
+    switch (sortingAlgo) {
+      case "mergeSort":
+        [animations, arr] = mergeSort(array, arraySize);
+        break;
+
+      case "bubbleSort":
+        [animations, arr] = bubbleSort(array, arraySize);
+        break;
+
+      case "insertionSort":
+        [animations, arr] = insertionSort(array, arraySize);
+        break;
+
+      case "selectionSort":
+        [animations, arr] = selectionSort(array, arraySize);
+        break;
+    }
     const animationSize = animations.length;
-    const animationSpeed = 40000 / animationSize;
-    console.log(animationSpeed, animationSize);
+    const animationSpeed = 1000 / arraySize;
 
     let i = 0;
     function animationLoop() {
@@ -83,22 +94,19 @@ function SortingVisualizer() {
           i += 3;
         }
         if (i < animationSize) animationLoop();
+        else {
+          setButtonState(false);
+          setArray(arr);
+        }
       }, animationSpeed);
     }
     animationLoop();
-    // let arr = [...array];
-    // arr.sort();
-    // setArray(arr);
   };
 
-  const test = () => {
-    const id = 0;
-    const a = document.getElementById(`${id}`);
-    const b = document.getElementById("1");
-    const temp = a.style.height;
-    a.style.height = b.style.height;
-    b.style.height = temp;
-  };
+  // useEffect(() => {
+  //   if (isInitiialMount.current) isInitiialMount.current = false;
+  //   else sortArray();
+  // }, [sortingState]);
 
   return (
     <>
@@ -106,7 +114,7 @@ function SortingVisualizer() {
         resetArray={resetArray}
         setSize={setArraySize}
         sort={sort}
-        test={test}
+        buttonState={buttonState}
       />
       <FlexBars>
         {array.map((value, idx) => (
