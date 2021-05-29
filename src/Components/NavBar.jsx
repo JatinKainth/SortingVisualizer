@@ -12,9 +12,9 @@ function NavBar({ resetArray, setSize, sort, buttonState }) {
   return (
     <ThemeProvider theme={theme}>
       <NavBarStyled>
-        <Button onClick={() => resetArray()} disabled={buttonState}>
+        <ResetBtn onClick={() => resetArray()} disabled={buttonState}>
           Generate New Array
-        </Button>
+        </ResetBtn>
         <RangeSlider setSize={setSize} sliderState={buttonState} />
         <Button
           onClick={() => setSortingAlgo("mergeSort")}
@@ -56,16 +56,17 @@ export default NavBar;
 const NavBarStyled = styled.div`
   display: flex;
   align-items: center;
-  height: 8vh;
+  height: 10vh;
   background-color: ${(props) => props.theme.navBackground};
   justify-content: space-around;
 `;
 
-const Button = styled.button`
+const ResetBtn = styled.button`
   background-color: ${(props) => props.theme.navBackground};
   color: white;
-  font-size: 16px;
-  padding: 12px 30px;
+  font-size: 18px;
+  padding: 6px 15px;
+  margin: 6px 15px;
   cursor: pointer;
   width: 100%;
 
@@ -74,7 +75,13 @@ const Button = styled.button`
   }
 
   &:disabled {
-    color: red;
+    color: grey;
     cursor: initial;
+  }
+`;
+
+const Button = styled(ResetBtn)`
+  &:focus {
+    color: orange;
   }
 `;

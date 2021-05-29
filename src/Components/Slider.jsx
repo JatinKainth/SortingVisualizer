@@ -1,4 +1,3 @@
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 
@@ -9,9 +8,11 @@ export default function RangeSlider({ setSize, sliderState }) {
 
   return (
     <SliderStyles>
-      <Typography id="discrete-slider">Size Of Array</Typography>
+      <Div id="discrete-slider" disabled={sliderState}>
+        Size Of Array
+      </Div>
       <Slider
-        defaultValue={100}
+        defaultValue={50}
         getAriaValueText={updateSize}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
@@ -27,6 +28,18 @@ export default function RangeSlider({ setSize, sliderState }) {
 const SliderStyles = styled.div`
   width: 100%;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
   text-align: center;
+`;
+
+const Div = styled.button`
+  font-size: 18px;
+  color: white;
+  margin-bottom: 5px;
+  cursor: initial;
+  background-color: #2b2b2b;
+
+  &:disabled {
+    color: gray;
+  }
 `;

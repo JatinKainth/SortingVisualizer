@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Bars from "./Bars";
 import NavBar from "./NavBar";
 import styled from "styled-components";
@@ -28,17 +28,20 @@ function SortingVisualizer() {
     setColor(color);
   };
 
-  // const sortArray = () => {
-  //   let arr = [...array];
-  //   arr.sort();
-  //   setArray(arr);
-  // };
+  const changeBarColor = (col) => {
+    const color = [];
+    for (let i = 0; i < arraySize; i++) {
+      color.push(col);
+    }
+    setColor(color);
+  };
 
   useEffect(() => {
     resetArray();
   }, [arraySize]);
 
   const sort = (sortingAlgo) => {
+    changeBarColor("black");
     setButtonState(true);
     const changeColor = (a, b, col) => {
       let barOne = document.getElementById(`${a}`);
@@ -48,7 +51,7 @@ function SortingVisualizer() {
     };
 
     const swap = (a, b) => {
-      changeColor(a, b, "yellow");
+      changeColor(a, b, "red");
 
       const barOne = document.getElementById(`${a}`);
       const barTwo = document.getElementById(`${b}`);
@@ -97,6 +100,7 @@ function SortingVisualizer() {
         else {
           setButtonState(false);
           setArray(arr);
+          changeBarColor("green");
         }
       }, animationSpeed);
     }
@@ -109,14 +113,15 @@ function SortingVisualizer() {
   // }, [sortingState]);
 
   return (
-    <>
+    <Body>
       <NavBar
         resetArray={resetArray}
         setSize={setArraySize}
         sort={sort}
         buttonState={buttonState}
       />
-      <FlexBars>
+
+      <BarSection>
         {array.map((value, idx) => (
           <Bars
             height={value}
@@ -126,14 +131,19 @@ function SortingVisualizer() {
             key={idx}
           />
         ))}
-      </FlexBars>
-    </>
+      </BarSection>
+    </Body>
   );
 }
 
 export default SortingVisualizer;
 
-const FlexBars = styled.div`
+const Body = styled.section`
+  height: 100vh;
+`;
+
+const BarSection = styled.div`
+  height: 85vh;
   display: flex;
   justify-content: center;
 `;

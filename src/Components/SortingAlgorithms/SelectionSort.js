@@ -1,24 +1,24 @@
-const bubbleSort = (array, arraySize) => {
-  let arr = [...array];
+const selectionSort = (array, n) => {
+  let inputArr = [...array];
   let animation = [];
-  let isSwapped = false;
-
-  for (let i = 0; i < arraySize - 1; i++) {
-    isSwapped = false;
-    for (let j = 0; j < arraySize - i - 1; j++) {
-      animation.push("changeColor", j, j + 1, "orange");
-      if (arr[j] > arr[j + 1]) {
-        animation.push("swap", j, j + 1);
-        const temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-        isSwapped = true;
+  for (let i = 0; i < n; i++) {
+    let min = i;
+    for (let j = i + 1; j < n; j++) {
+      animation.push("changeColor", j, j, "orange");
+      if (inputArr[j] < inputArr[min]) {
+        min = j;
       }
-      animation.push("changeColor", j, j + 1, "black");
+      animation.push("changeColor", j, j, "black");
     }
-    if (!isSwapped) break;
+    if (min != i) {
+      animation.push("swap", i, min);
+      let tmp = inputArr[i];
+      inputArr[i] = inputArr[min];
+      inputArr[min] = tmp;
+    }
   }
-  return [animation, arr];
+  console.log(animation);
+  return [animation, inputArr];
 };
 
-export default bubbleSort;
+export default selectionSort;
