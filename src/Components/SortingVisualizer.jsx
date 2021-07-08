@@ -60,6 +60,13 @@ function SortingVisualizer() {
       barTwo.style.height = temp;
     };
 
+    const change = (a, b) => {
+      changeColor(a, a, "red");
+
+      const barOne = document.getElementById(`${a}`);
+      barOne.style.height = `${b*0.75}px`
+    }
+
     let animations, arr;
     switch (sortingAlgo) {
       case "mergeSort":
@@ -90,7 +97,12 @@ function SortingVisualizer() {
           let col = animations[i + 3];
           changeColor(a, b, col);
           i += 4;
-        } else {
+        } else if (animations[i] === "change") {
+          const a = animations[i + 1];
+          const b = animations[i + 2];
+          change(a, b);
+          i += 3;
+        }else {
           const a = animations[i + 1];
           const b = animations[i + 2];
           swap(a, b);
