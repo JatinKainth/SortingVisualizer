@@ -11,7 +11,7 @@ export default Bars;
 
 const StyledBars = styled.div.attrs((props) => ({
   style: {
-    height: props.height * 0.75,
+    height: props.height * 0.7,
     width: 600 / props.width,
     backgroundColor: props.backColor,
   },
