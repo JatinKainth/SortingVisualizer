@@ -64,7 +64,7 @@ function SortingVisualizer() {
       changeColor(a, a, "red");
 
       const barOne = document.getElementById(`${a}`);
-      barOne.style.height = `${b*0.75}px`
+      barOne.style.height = `${b*0.7}px`
     }
 
     let animations, arr;
